@@ -61,8 +61,7 @@ public class Main {
         System.out.println("");
 
         // create a tool
-        Employee[] users = {employee3, employee5};
-        Tool intellij = new Tool("IntelliJ IDEA Ultimate (Enterprise Edition)", users);
+        Tool intellij = new Tool("IntelliJ IDEA Ultimate (Enterprise Edition)", new Employee[]{employee3, employee5});
 
         // check an employee's access to a tool
         System.out.println(intellij.checkAccess(employee3));
