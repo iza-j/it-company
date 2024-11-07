@@ -5,9 +5,6 @@ public class Department {
     private Team[] teams;
 
     public Department() {
-        this.name = name;
-        this.headOfDpt = headOfDpt;
-        this.teams = teams;
     }
 
     public Department(String name, Employee headOfDpt, Team[] teams) {

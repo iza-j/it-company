@@ -5,9 +5,6 @@ public class Team {
     private Employee[] employees;
 
     public Team() {
-        this.name = name;
-        this.teamLeader = teamLeader;
-        this.employees = employees;
     }
 
     public Team(String name, Employee teamLeader, Employee[] employees) {
