@@ -9,7 +9,6 @@ public class Skill {
     }
 
     public void checkAccess(Tool tool) {
-
         System.out.print("Employees skilled at ");
         System.out.print(this.name);
         System.out.print(", but without access to ");

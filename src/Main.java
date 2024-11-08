@@ -3,7 +3,6 @@ import java.math.BigDecimal;
 public class Main {
 
     public static void main(String[] args) {
-
         // create employees
         Employee employee1 = new Employee("Karol Zakrętka", "Antarctica/Troll", "2002-01-09", 714.0);
         Employee employee2 = new Employee("Zofia Cętka", "US/Pacific", "2013-12-29", 301.7);

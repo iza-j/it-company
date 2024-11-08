@@ -16,7 +16,6 @@ public class Employee {
     }
 
     public void printTimeZone() {
-
         DateTimeFormatter form = DateTimeFormatter.ofPattern("HH:mm, MMMM d");
 
         System.out.print(this.name);
@@ -28,7 +27,6 @@ public class Employee {
     }
 
     public void printWorkYears() {
-
         LocalDate start = LocalDate.parse(this.firstDay);
         Period period = Period.between(start, LocalDate.now());
 
