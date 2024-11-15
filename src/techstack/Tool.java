@@ -1,3 +1,7 @@
+package techstack;
+
+import corporatestructure.Employee;
+
 public class Tool {
 
     private String name;
@@ -13,6 +17,7 @@ public class Tool {
         for (int i = 0; i < this.users.length; i++) {
             if (employee == this.users[i]) {
                 access = true;
+                break;
             }
         }
         return access;

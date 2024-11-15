@@ -1,3 +1,5 @@
+package outsideentities;
+
 public class Client {
 
     private String name;

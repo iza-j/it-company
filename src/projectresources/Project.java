@@ -1,3 +1,6 @@
+package projectresources;
+
+import outsideentities.Client;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 

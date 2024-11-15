@@ -1,3 +1,5 @@
+package corporatestructure;
+
 public class Department {
 
     private String name;

@@ -1,3 +1,7 @@
+package techstack;
+
+import corporatestructure.Employee;
+
 public class Skill {
 
     private String name;
@@ -8,21 +12,18 @@ public class Skill {
         this.employees = employees;
     }
 
-    public void checkAccess(Tool tool) {
-        System.out.print("Employees skilled at ");
-        System.out.print(this.name);
-        System.out.print(", but without access to ");
-        System.out.print(tool.getName());
-        System.out.println(":");
+    public void printAccess(Tool tool) {
+        System.out.print("Employees skilled at " + this.name + ", but without access to " + tool.getName() + ":\n");
 
         for (int i = 0; i < this.employees.length; i++) {
             boolean access = false;
             for (int j = 0; j < tool.getUsers().length; j++) {
-                if (this.employees[i] == tool.getUsers()[j]) {
+                if (this.employees[i].equals(tool.getUsers()[j])) {
                     access = true;
+                    break;
                 }
             }
-            if (access == false) {
+            if (!access) {
                 System.out.println(this.employees[i].getName());
             }
         }

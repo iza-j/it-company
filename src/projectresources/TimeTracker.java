@@ -1,3 +1,7 @@
+package projectresources;
+
+import corporatestructure.Employee;
+
 public class TimeTracker {
 
     private Employee employee;

@@ -1,3 +1,5 @@
+package corporatestructure;
+
 public class ITCompany {
 
     private String name;
