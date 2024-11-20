@@ -2,6 +2,8 @@ import corporatestructure.*;
 import outsideentities.*;
 import projectresources.*;
 import techstack.*;
+import static helpers.Formatter.*;
+
 import java.math.BigDecimal;
 
 public class Main {
@@ -21,12 +23,12 @@ public class Main {
         Team qualityAssurance = new Team();
 
         // print some of employees' data
-        System.out.println(" ");
+        nL();
         employee1.printTimeZone();
-        System.out.println(" ");
+        nL();
         testAutomation.printEmployees();
         employee2.printWorkYears();
-        System.out.println(" ");
+        nL();
 
         //create departments
         Team[] teams = {testAutomation, qualityAssurance};
@@ -75,7 +77,7 @@ public class Main {
 
         // check skilled employees' access to a tool
         programmingJava.printAccess(intellij);
-        System.out.println(" ");
+        nL();
 
         // print employees' hash codes
         Employee[] employeeList = {employee1, employee2, employee3, employee4, employee5, employee6};
@@ -83,21 +85,21 @@ public class Main {
             Employee e = employeeList[i];
             System.out.println(e.hashCode());
         }
-        System.out.println(" ");
+        nL();
 
         // print toString's output for all employees
         for (int i = 0; i < employeeList.length; i++) {
             Employee e = employeeList[i];
             System.out.println(e.toString());
         }
-        System.out.println(" ");
+        nL();
 
         // compare all employees to employee6
         for (int i = 0; i < employeeList.length; i++) {
             Employee e = employeeList[i];
             System.out.println(e.equals(employee6));
         }
-        System.out.println(" ");
+        nL();
 
         // you can find comments about overriding in the Employee class
 
@@ -108,10 +110,37 @@ public class Main {
         jetBrains.phoneCall();
 
         // create a committe & a taskforce, then print their descriptions
-        Team dei = new Committee("Diversity Equity and Inclusion", employee2, new Employee[]{employee3, employee4});
+        Team dei = new Committee("Diversity, Equity and Inclusion", employee2, new Employee[]{employee3, employee4});
         Team christmasParty = new TaskForce("Christmas Party Organizers", employee4, new Employee[]{employee2, employee5});
         dei.printDescription();
         christmasParty.printDescription();
         testAutomation.printDescription();
+        nL();
+
+        // use overridden TimeTracker's methods
+        System.out.println(izaBoopLoop.toString());
+        System.out.println(izaBoopLoop.equals(jakubBoopLoop));
+        System.out.println(izaBoopLoop.hashCode() + ", " + jakubBoopLoop.hashCode() + "\n");
+
+        // use overridden Team's methods
+        System.out.println(testAutomation.toString());
+        System.out.println(testAutomation.equals(dei));
+        System.out.println(testAutomation.hashCode() + ", " + dei.hashCode() + "\n");
+
+        // use a CorporateUnit's getAllEmployees() method on objects from different classes (ITCompany, Department, Team, Committee)
+        CorporateUnit[] corporateUnits = new CorporateUnit[]{resolvd, qaAndTesting, testAutomation, dei};
+        for (int i = 0; i < corporateUnits.length; i++) {
+            System.out.println(corporateUnits[i].getName() + " consists of:");
+            for (int j = 0; j < corporateUnits[i].getAllEmployees().length; j++) {
+                System.out.println(corporateUnits[i].getAllEmployees()[j].getName());
+            }
+            nL();
+        }
+
+        // use PayableEntity's pay() method
+        inea.pay(420);
+        jetBrains.pay(69999.99);
+        employee4.pay(employee4.getHourlyWage() * 8);
+        nL();
     }
 }

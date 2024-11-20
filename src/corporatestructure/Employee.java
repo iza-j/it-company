@@ -1,10 +1,13 @@
 package corporatestructure;
 
+import outsideentities.PayableEntity;
+import static helpers.GlobalVariable.*;
+
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public class Employee {
+public final class Employee implements PayableEntity { // 'final' keyword prevents inheritance. i don't want to have employees of a different class than Employee
 
     private int id;
     private String name;
@@ -22,10 +25,10 @@ public class Employee {
 
     @Override
     public int hashCode() { // a manual override
-        int code = 17; // using prime numbers bc of a reason that i don't understand (yet)
-        code = code * 31 + id; // int's default value can't be null, so no conditions in this line
-        code = code * 31 + (name != null ? name.hashCode() : 0); // ternary conditional operator (inline if)
-        code = code * 31 + (firstDay != null ? firstDay.hashCode() : 0); // (a ? b : c) == (if a then b otherwise c)
+        int code = multiplicand; // using prime numbers bc of a reason that i don't understand (yet)
+        code = code * multiplier + id; // int's default value can't be null, so no conditions in this line
+        code = code * multiplier + (name != null ? name.hashCode() : 0); // ternary conditional operator (inline if)
+        code = code * multiplier + (firstDay != null ? firstDay.hashCode() : 0); // (a ? b : c) == (if a then b otherwise c)
         return code; // id should be unique, but someone's id could be entered incorrectly. but then it's rather impossible to have id and name and firstDay identical to another employee
     }
 
@@ -40,9 +43,9 @@ public class Employee {
         if (this.getClass() != compared.getClass()) { // if i tried to compare objects from 2 different classes i'd get a ClassCastException (also not good)
             return false;
         }
-        return  this.id == ((Employee) compared).getID()
-                && Objects.equals(this.name, ((Employee) compared).getName())
-                && Objects.equals(this.firstDay, ((Employee) compared).getFirstDay()); // returns value of && statement
+        return  this.id == ((Employee) compared).getID() &&
+                Objects.equals(this.name, ((Employee) compared).getName()) &&
+                Objects.equals(this.firstDay, ((Employee) compared).getFirstDay()); // returns value of && statement
     }
 
     @Override
@@ -73,6 +76,10 @@ public class Employee {
             System.out.print(period.getDays() + " day(s)!\n");
         }
     }
+
+    public void pay(double amount){
+        System.out.println("*ka-ching!* You pay " + this.name + " " + amount + " pln for their work.");
+    };
 
     public int getID() {
         return id;
