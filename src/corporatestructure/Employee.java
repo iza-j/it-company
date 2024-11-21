@@ -27,10 +27,10 @@ public final class Employee implements PayableEntity, TaskOwner, Stakeholder, Sp
 
     @Override
     public int hashCode() { // a manual override
-        int code = multiplicand; // using prime numbers bc of a reason that i don't understand (yet)
-        code = code * multiplier + id; // int's default value can't be null, so no conditions in this line
-        code = code * multiplier + (name != null ? name.hashCode() : 0); // ternary conditional operator (inline if)
-        code = code * multiplier + (firstDay != null ? firstDay.hashCode() : 0); // (a ? b : c) == (if a then b otherwise c)
+        int code = MULTIPLICAND; // using prime numbers bc of a reason that i don't understand (yet)
+        code = code * MULTIPLIER + id; // int's default value can't be null, so no conditions in this line
+        code = code * MULTIPLIER + (name != null ? name.hashCode() : 0); // ternary conditional operator (inline if)
+        code = code * MULTIPLIER + (firstDay != null ? firstDay.hashCode() : 0); // (a ? b : c) == (if a then b otherwise c)
         return code; // id should be unique, but someone's id could be entered incorrectly. but then it's rather impossible to have id and name and firstDay identical to another employee
     }
 
@@ -79,20 +79,22 @@ public final class Employee implements PayableEntity, TaskOwner, Stakeholder, Sp
         }
     }
 
+    @Override
     public void pay(double amount){
-        System.out.println(ansiYellowFG + "*ka-ching!*" + ansiColorReset + " You pay " + this.name + " " + amount + " pln for their work.");
+        System.out.println(ansiColor(yellowFG, blackBG) + " *ka-ching!* " + ansiColor(reset) + " You pay " + this.name + " " + amount + " pln for their work.");
     };
 
+    @Override
     public void finishTask(Task task){
         task.setStatus("finished");
 
-        System.out.println(ansiCyanFG + "Task:\n" + ansiColorReset + task.getDescription());
-        System.out.println(ansiCyanFG + "Stakeholders: " + ansiColorReset);
+        System.out.println(ansiColor(cyanFG) + "Task:\n" + ansiColor(reset) + task.getDescription());
+        System.out.println(ansiColor(cyanFG) + "Stakeholders:" + ansiColor(reset));
         for (Stakeholder stakeholder : task.getStakeholders()) {
             System.out.println(stakeholder.getName());
         }
-        System.out.println(ansiCyanFG + "Finished by:\n" + ansiColorReset + this.getName());
-    };
+        System.out.println(ansiColor(cyanFG) + "Finished by:\n" + ansiColor(reset) + this.getName());
+    }
 
     public boolean checkAffiliation (CorporateUnit corporateUnit) {
         boolean affiliation = false;
@@ -105,6 +107,7 @@ public final class Employee implements PayableEntity, TaskOwner, Stakeholder, Sp
         return affiliation;
     }
 
+    @Override
     public void requestSpace() {
         System.out.println("Your request has been approved! You booked 1 desk for " + this.getName());
     };
@@ -117,6 +120,7 @@ public final class Employee implements PayableEntity, TaskOwner, Stakeholder, Sp
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }

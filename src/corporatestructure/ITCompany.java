@@ -8,6 +8,7 @@ public class ITCompany implements CorporateUnit {
     private Employee ceo;
     private Department[] departments;
 
+    @Override
     public Employee[] getAllEmployees() {
         ArrayList<Employee> employees = new ArrayList<Employee>();
 
@@ -30,6 +31,7 @@ public class ITCompany implements CorporateUnit {
         return result;
     }
 
+    @Override
     public String getName() {
         return name;
     }

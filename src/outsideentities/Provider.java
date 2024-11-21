@@ -9,8 +9,9 @@ public abstract class Provider implements PayableEntity { // an abstract class c
 
     public abstract void phoneCall();
 
+    @Override
     public void pay(double amount){
-        System.out.println(ansiYellowFG + "*ka-ching!*" + ansiColorReset + " You pay " + this.name + " " + amount + " pln for their services.");
+        System.out.println(ansiColor(yellowFG, blackBG) + " *ka-ching!* " + ansiColor(reset) + " You pay " + this.name + " " + amount + " pln for their services.");
     };
 
     public String getName() {

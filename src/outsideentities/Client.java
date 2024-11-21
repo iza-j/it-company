@@ -12,6 +12,7 @@ public class Client implements Stakeholder {
         this.address = address;
     }
 
+    @Override
     public String getName() {
         return name;
     }

@@ -10,6 +10,7 @@ public class InternetServiceProvider extends Provider {
         this.country = country;
     }
 
+    @Override
     public void phoneCall() {
         System.out.println("Calling...\n.\n.\n.\nPlease call later. " + this.name + "'s customer service team waits to help you on second mondays of every third month, from 1pm til 2pm.\n");
     }

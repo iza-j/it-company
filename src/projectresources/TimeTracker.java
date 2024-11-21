@@ -19,9 +19,9 @@ public class TimeTracker {
 
     @Override
     public int hashCode() {
-        int code = multiplicand;
-        code = code * multiplier + (employee != null ? employee.hashCode() : 0);
-        code = code * multiplier + (project != null ? project.hashCode() : 0);
+        int code = MULTIPLICAND;
+        code = code * MULTIPLIER + (employee != null ? employee.hashCode() : 0);
+        code = code * MULTIPLIER + (project != null ? project.hashCode() : 0);
         return code;
     }
 

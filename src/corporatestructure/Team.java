@@ -24,9 +24,9 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
 
     @Override
     public int hashCode() {
-        int code = multiplicand;
-        code = code * multiplier + (name != null ? name.hashCode() : 0);
-        code = code * multiplier + (leader != null ? leader.hashCode() : 0);
+        int code = MULTIPLICAND;
+        code = code * MULTIPLIER + (name != null ? name.hashCode() : 0);
+        code = code * MULTIPLIER + (leader != null ? leader.hashCode() : 0);
         return code;
     }
 
@@ -77,6 +77,7 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
         }
     }
 
+    @Override
     public final Employee[] getAllEmployees() { // final method can't be overridden by a subclass
         ArrayList<Employee> employees = new ArrayList<Employee>();
 
@@ -95,21 +96,24 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
         return result;
     }
 
+    @Override
     public void finishTask(Task task){
         task.setStatus("finished");
 
-        System.out.println(ansiCyanFG + "Task:\n" + ansiColorReset + task.getDescription());
-        System.out.println(ansiCyanFG + "Stakeholders: " + ansiColorReset);
+        System.out.println(ansiColor(cyanFG) + "Task:\n" + ansiColor(reset) + task.getDescription());
+        System.out.println(ansiColor(cyanFG) + "Stakeholders:" + ansiColor(reset));
         for (Stakeholder stakeholder : task.getStakeholders()) {
             System.out.println(stakeholder.getName());
         }
-        System.out.println(ansiCyanFG + "Finished by:\n" + ansiColorReset + this.getName());
-    };
+        System.out.println(ansiColor(cyanFG) + "Finished by:\n" + ansiColor(reset) + this.getName());
+    }
 
+    @Override
     public void requestSpace() {
         System.out.println("Your request has been approved! You booked " + this.getAllEmployees().length + " desk(s) for " + this.getName());
     };
 
+    @Override
     public String getName() {
         return name;
     }

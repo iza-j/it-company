@@ -17,6 +17,7 @@ public class Department implements CorporateUnit {
         this.teams = teams;
     }
 
+    @Override
     public Employee[] getAllEmployees() {
         ArrayList<Employee> employees = new ArrayList<Employee>();
 
@@ -55,6 +56,7 @@ public class Department implements CorporateUnit {
         this.headOfDpt = headOfDpt;
     }
 
+    @Override
     public String getName() {
         return name;
     }

@@ -23,12 +23,12 @@ public class Main {
         Team qualityAssurance = new Team();
 
         // print some of employees' data
-        nL();
+        System.out.println();
         employee1.printTimeZone();
-        nL();
+        System.out.println();
         testAutomation.printEmployees();
         employee2.printWorkYears();
-        nL();
+        System.out.println();
 
         //create departments
         Team[] teams = {testAutomation, qualityAssurance};
@@ -77,7 +77,7 @@ public class Main {
 
         // check skilled employees' access to a tool
         programmingJava.printAccess(intellij);
-        nL();
+        System.out.println();
 
         // print employees' hash codes
         Employee[] employeeList = {employee1, employee2, employee3, employee4, employee5, employee6};
@@ -85,21 +85,21 @@ public class Main {
             Employee e = employeeList[i];
             System.out.println(e.hashCode());
         }
-        nL();
+        System.out.println();
 
         // print toString's output for all employees
         for (int i = 0; i < employeeList.length; i++) {
             Employee e = employeeList[i];
             System.out.println(e.toString());
         }
-        nL();
+        System.out.println();
 
         // compare all employees to employee6
         for (int i = 0; i < employeeList.length; i++) {
             Employee e = employeeList[i];
             System.out.println(e.equals(employee6));
         }
-        nL();
+        System.out.println();
 
         // you can find comments about overriding in the Employee class
 
@@ -115,7 +115,7 @@ public class Main {
         dei.printDescription();
         christmasParty.printDescription();
         testAutomation.printDescription();
-        nL();
+        System.out.println();
 
         // use overridden TimeTracker's methods
         System.out.println(izaBoopLoop.toString());
@@ -134,27 +134,27 @@ public class Main {
             for (int j = 0; j < corporateUnits[i].getAllEmployees().length; j++) {
                 System.out.println(corporateUnits[i].getAllEmployees()[j].getName());
             }
-            nL();
+            System.out.println();
         }
 
         // use PayableEntity's pay() method
         inea.pay(420);
         jetBrains.pay(69999.99);
         employee4.pay(employee4.getHourlyWage() * 8);
-        nL();
+        System.out.println();
 
         // create a task and close it
         Task task1 = new Task("Whatchamacallit is shebanging in the BoopLoop's pinto logs and the mainframe hexing gets bungled ", employee4, new Stakeholder[]{employee3, google}, "open");
         System.out.println(task1.getStatus() + "\n");
         employee4.finishTask(task1);
         System.out.println("\n" + task1.getStatus());
-        nL();
+        System.out.println();
 
         // check whether an employee belongs to different CorporateUnits
         for (CorporateUnit corporateUnit : new CorporateUnit[]{testAutomation, qaAndTesting, resolvd, dei}) {
             System.out.println(corporateUnit.getName() + ": " + employee2.checkAffiliation(corporateUnit));
         }
-        nL();
+        System.out.println();
 
         // use SpaceRequester's method
         employee1.requestSpace();
