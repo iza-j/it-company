@@ -17,8 +17,8 @@ public class Skill {
 
         for (int i = 0; i < this.employees.length; i++) {
             boolean access = false;
-            for (int j = 0; j < tool.getUsers().length; j++) {
-                if (this.employees[i].equals(tool.getUsers()[j])) {
+            for (int j = 0; j < tool.getEmployees().length; j++) {
+                if (this.employees[i].equals(tool.getEmployees()[j])) {
                     access = true;
                     break;
                 }

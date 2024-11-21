@@ -1,6 +1,8 @@
 package outsideentities;
 
-public class Client {
+import projectresources.Stakeholder;
+
+public class Client implements Stakeholder {
 
     private String name;
     private String address;

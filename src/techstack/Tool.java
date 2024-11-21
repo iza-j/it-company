@@ -5,17 +5,17 @@ import corporatestructure.Employee;
 public class Tool {
 
     private String name;
-    private Employee[] users;
+    private Employee[] employees;
 
-    public Tool(String name, Employee[] users) {
+    public Tool(String name, Employee[] employees) {
         this.name = name;
-        this.users = users;
+        this.employees = employees;
     }
 
     public boolean checkAccess(Employee employee) {
         boolean access = false;
-        for (int i = 0; i < this.users.length; i++) {
-            if (employee == this.users[i]) {
+        for (int i = 0; i < this.employees.length; i++) {
+            if (employee == this.employees[i]) {
                 access = true;
                 break;
             }
@@ -31,11 +31,11 @@ public class Tool {
         this.name = name;
     }
 
-    public Employee[] getUsers() {
-        return users;
+    public Employee[] getEmployees() {
+        return employees;
     }
 
-    public void setUsers(Employee[] users) {
-        this.users = users;
+    public void setEmployees(Employee[] employees) {
+        this.employees = employees;
     }
 }

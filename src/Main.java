@@ -65,7 +65,7 @@ public class Main {
         System.out.println(boopLoop.getEarnings() + "\n");
 
         // create a tool
-        Tool intellij = new Tool("IntelliJ IDEA Ultimate (Enterprise Edition)", new Employee[]{employee3, employee5});
+        Tool intellij = new Tool("IntelliJ IDEA Ultimate (Enterprise Edition)", new Employee[]{employee3, employee1});
 
         // check an employee's access to a tool
         System.out.println(intellij.checkAccess(employee3));
@@ -142,5 +142,24 @@ public class Main {
         jetBrains.pay(69999.99);
         employee4.pay(employee4.getHourlyWage() * 8);
         nL();
+
+        // create a task and close it
+        Task task1 = new Task("Whatchamacallit is shebanging in the BoopLoop's pinto logs and the mainframe hexing gets bungled ", employee4, new Stakeholder[]{employee3, google}, "open");
+        System.out.println(task1.getStatus() + "\n");
+        employee4.finishTask(task1);
+        System.out.println("\n" + task1.getStatus());
+        nL();
+
+        // check whether an employee belongs to different CorporateUnits
+        for (CorporateUnit corporateUnit : new CorporateUnit[]{testAutomation, qaAndTesting, resolvd, dei}) {
+            System.out.println(corporateUnit.getName() + ": " + employee2.checkAffiliation(corporateUnit));
+        }
+        nL();
+
+        // use SpaceRequester's method
+        employee1.requestSpace();
+        christmasParty.requestSpace();
+
+        // i can't come up with where i might want to use a static block (fragment of code that gets executed exactly once). i'd appreciate any suggestions
     }
 }

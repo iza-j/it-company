@@ -1,11 +1,13 @@
 package corporatestructure;
 
+import projectresources.*;
+import static helpers.Formatter.*;
 import static helpers.GlobalVariable.*;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Team implements CorporateUnit {
+public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequester {
 
     protected String name;
     protected Employee leader;
@@ -18,6 +20,35 @@ public class Team implements CorporateUnit {
         this.name = name;
         this.leader = leader;
         this.employees = employees;
+    }
+
+    @Override
+    public int hashCode() {
+        int code = multiplicand;
+        code = code * multiplier + (name != null ? name.hashCode() : 0);
+        code = code * multiplier + (leader != null ? leader.hashCode() : 0);
+        return code;
+    }
+
+    @Override
+    public boolean equals(Object compared) {
+        if (compared == this) {
+            return true;
+        }
+        if (compared == null) {
+            return false;
+        }
+        if (this.getClass() != compared.getClass()) {
+            return false;
+        }
+        return  Objects.equals(this.name, ((Team) compared).getName()) &&
+                Objects.equals(this.leader, ((Team) compared).getLeader());
+    }
+
+    @Override
+    public String toString() {
+        return  "Team " + (this.name == null ? "n/d" : this.name) +
+                ", led by " + (this.leader == null ? "n/d" : this.leader.getName());
     }
 
     public void printDescription() {
@@ -64,34 +95,20 @@ public class Team implements CorporateUnit {
         return result;
     }
 
-    @Override
-    public int hashCode() {
-        int code = multiplicand;
-        code = code * multiplier + (name != null ? name.hashCode() : 0);
-        code = code * multiplier + (leader != null ? leader.hashCode() : 0);
-        return code;
-    }
+    public void finishTask(Task task){
+        task.setStatus("finished");
 
-    @Override
-    public boolean equals(Object compared) {
-        if (compared == this) {
-            return true;
+        System.out.println(ansiCyanFG + "Task:\n" + ansiColorReset + task.getDescription());
+        System.out.println(ansiCyanFG + "Stakeholders: " + ansiColorReset);
+        for (Stakeholder stakeholder : task.getStakeholders()) {
+            System.out.println(stakeholder.getName());
         }
-        if (compared == null) {
-            return false;
-        }
-        if (this.getClass() != compared.getClass()) {
-            return false;
-        }
-        return  Objects.equals(this.name, ((Team) compared).getName()) &&
-                Objects.equals(this.leader, ((Team) compared).getLeader());
-    }
+        System.out.println(ansiCyanFG + "Finished by:\n" + ansiColorReset + this.getName());
+    };
 
-    @Override
-    public String toString() {
-        return  "Team " + (this.name == null ? "n/d" : this.name) +
-                ", led by " + (this.leader == null ? "n/d" : this.leader.getName());
-    }
+    public void requestSpace() {
+        System.out.println("Your request has been approved! You booked " + this.getAllEmployees().length + " desk(s) for " + this.getName());
+    };
 
     public String getName() {
         return name;

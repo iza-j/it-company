@@ -1,13 +1,15 @@
 package corporatestructure;
 
 import outsideentities.PayableEntity;
+import projectresources.*;
+import static helpers.Formatter.*;
 import static helpers.GlobalVariable.*;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public final class Employee implements PayableEntity { // 'final' keyword prevents inheritance. i don't want to have employees of a different class than Employee
+public final class Employee implements PayableEntity, TaskOwner, Stakeholder, SpaceRequester { // 'final' keyword prevents inheritance. i don't want to have employees of a different class than Employee
 
     private int id;
     private String name;
@@ -78,7 +80,33 @@ public final class Employee implements PayableEntity { // 'final' keyword preven
     }
 
     public void pay(double amount){
-        System.out.println("*ka-ching!* You pay " + this.name + " " + amount + " pln for their work.");
+        System.out.println(ansiYellowFG + "*ka-ching!*" + ansiColorReset + " You pay " + this.name + " " + amount + " pln for their work.");
+    };
+
+    public void finishTask(Task task){
+        task.setStatus("finished");
+
+        System.out.println(ansiCyanFG + "Task:\n" + ansiColorReset + task.getDescription());
+        System.out.println(ansiCyanFG + "Stakeholders: " + ansiColorReset);
+        for (Stakeholder stakeholder : task.getStakeholders()) {
+            System.out.println(stakeholder.getName());
+        }
+        System.out.println(ansiCyanFG + "Finished by:\n" + ansiColorReset + this.getName());
+    };
+
+    public boolean checkAffiliation (CorporateUnit corporateUnit) {
+        boolean affiliation = false;
+        for (Employee employee : corporateUnit.getAllEmployees()) {
+            if (this == employee) {
+                affiliation = true;
+                break;
+            }
+        }
+        return affiliation;
+    }
+
+    public void requestSpace() {
+        System.out.println("Your request has been approved! You booked 1 desk for " + this.getName());
     };
 
     public int getID() {
