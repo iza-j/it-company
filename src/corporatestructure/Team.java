@@ -5,6 +5,7 @@ import static helpers.Formatter.*;
 import static helpers.GlobalVariable.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequester {
@@ -47,52 +48,53 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
 
     @Override
     public String toString() {
-        return  "Team " + (this.name == null ? "n/d" : this.name) +
-                ", led by " + (this.leader == null ? "n/d" : this.leader.getName());
+        return  new StringBuilder()
+                .append("Team ")
+                .append(this.name == null ? "n/d" : this.name)
+                .append(", led by ")
+                .append(this.leader == null ? "n/d" : this.leader.getName())
+                .toString();
     }
 
     public void printDescription() {
         if ((this.name != null) && (this.leader != null) && (this.employees != null)) {
-            System.out.print(this.leader.getName() + " is in charge of " + this.getName() + ". ");
+            System.out.print(new StringBuilder()
+                    .append(this.leader.getName())
+                    .append(" is in charge of ")
+                    .append(this.getName())
+                    .append(". "));
             for (int i = 0; i < this.employees.length; i++) {
                 if (i != 0) {
                     System.out.print(", ");
                 }
                 System.out.print(employees[i].getName());
             }
+            System.out.print(" work alongside them.\n");
         }
-        System.out.print(" work alongside them.\n");
     }
 
-    public void printEmployees() {
-        leader = this.getLeader();
-        leader.printTimeZone();
-        leader.printWorkYears();
-        System.out.println(" ");
-        for (int i = 0; i < this.getEmployees().length; i++) {
-            Employee emp = this.getEmployees()[i];
-            emp.printTimeZone();
-            emp.printWorkYears();
-            System.out.println(" ");
+    public void printEmployeesDescription() {
+        for (Employee employee : this.getAllEmployees()) {
+            employee.printTimeZone();
+            employee.printWorkYears();
+            System.out.println();
         }
     }
 
     @Override
     public final Employee[] getAllEmployees() { // final method can't be overridden by a subclass
-        ArrayList<Employee> employees = new ArrayList<Employee>();
+        ArrayList<Employee> teamEmployees = new ArrayList<Employee>();
 
         if (this.getLeader() != null) { // if a team leader exists
-            employees.add(this.getLeader());
+            teamEmployees.add(this.getLeader());
         }
 
         if (this.getEmployees() != null) { // if any employees exist
-            for (int i = 0; i < this.getEmployees().length; i++) {
-                employees.add(this.getEmployees()[i] );
-            }
+            Collections.addAll(teamEmployees, this.getEmployees());
         }
 
-        Employee[] result = new Employee[employees.size()]; // convert back to an array type
-        employees.toArray(result);
+        Employee[] result = new Employee[teamEmployees.size()]; // convert back to an array type
+        teamEmployees.toArray(result);
         return result;
     }
 
@@ -100,18 +102,33 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
     public void finishTask(Task task){
         task.setStatus("finished");
 
-        System.out.println(ansiColor(cyanFG) + "Task:\n" + ansiColor(reset) + task.getDescription());
-        System.out.println(ansiColor(cyanFG) + "Stakeholders:" + ansiColor(reset));
+        System.out.println(new StringBuilder()
+                .append(ansiColor(cyanFG))
+                .append("Task:\n")
+                .append(ansiColor(reset))
+                .append(task.getDescription())
+                .append("\n")
+                .append(ansiColor(cyanFG))
+                .append("Stakeholders:")
+                .append(ansiColor(reset)));
         for (Stakeholder stakeholder : task.getStakeholders()) {
             System.out.println(stakeholder.getName());
         }
-        System.out.println(ansiColor(cyanFG) + "Finished by:\n" + ansiColor(reset) + this.getName());
+        System.out.println(new StringBuilder()
+                .append(ansiColor(cyanFG))
+                .append("Finished by:\n")
+                .append(ansiColor(reset))
+                .append(this.getName()));
     }
 
     @Override
     public void requestSpace() {
-        System.out.println("Your request has been approved! You booked " + this.getAllEmployees().length + " desk(s) for " + this.getName());
-    };
+        System.out.println(new StringBuilder()
+                .append("Your request has been approved! You booked ")
+                .append(this.getAllEmployees().length)
+                .append(" desk(s) for ")
+                .append(this.getName()));
+    }
 
     @Override
     public String getName() {

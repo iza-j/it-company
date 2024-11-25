@@ -11,8 +11,16 @@ public abstract class Provider implements PayableEntity { // an abstract class c
 
     @Override
     public void pay(double amount){
-        System.out.println(ansiColor(yellowFG, blackBG) + " *ka-ching!* " + ansiColor(reset) + " You pay " + this.name + " " + amount + " pln for their services.");
-    };
+        System.out.println(new StringBuilder()
+                .append(ansiColor(yellowFG, blackBG))
+                .append(" *ka-ching!* ")
+                .append(ansiColor(reset))
+                .append(" You pay ")
+                .append(this.name)
+                .append(" ")
+                .append(amount)
+                .append(" pln for their services."));
+    }
 
     public String getName() {
         return name;

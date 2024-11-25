@@ -42,9 +42,14 @@ public class TimeTracker {
 
     @Override
     public String toString() {
-        return  "Time tracker of " + (this.employee == null ? "n/d" : this.employee.getName()) +
-                ". Project #" + (this.project == null ? "n/d" : this.project.getProjectNo()) +
-                " for " + (this.project == null ? "n/d" : this.project.getClient().getName());
+        return  new StringBuilder()
+                .append("Time tracker of ")
+                .append(this.employee == null ? "n/d" : this.employee.getName())
+                .append(". Project #")
+                .append(this.project == null ? "n/d" : this.project.getProjectNo())
+                .append(" for ")
+                .append(this.project == null ? "n/d" : this.project.getClient().getName())
+                .toString();
     }
 
     public void logHours(Integer hours) {

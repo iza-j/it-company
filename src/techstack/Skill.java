@@ -13,18 +13,23 @@ public class Skill {
     }
 
     public void printAccess(Tool tool) {
-        System.out.print("Employees skilled at " + this.name + ", but without access to " + tool.getName() + ":\n");
+        System.out.print(new StringBuilder()
+                .append("Employees skilled at ")
+                .append(this.name)
+                .append(", but without access to ")
+                .append(tool.getName())
+                .append(":\n"));
 
-        for (int i = 0; i < this.employees.length; i++) {
+        for (Employee employee : this.getEmployees()) {
             boolean access = false;
-            for (int j = 0; j < tool.getEmployees().length; j++) {
-                if (this.employees[i].equals(tool.getEmployees()[j])) {
+            for (Employee toolUser : tool.getEmployees()) {
+                if (employee.equals(toolUser)) {
                     access = true;
                     break;
                 }
             }
             if (!access) {
-                System.out.println(this.employees[i].getName());
+                System.out.println(employee.getName());
             }
         }
     }

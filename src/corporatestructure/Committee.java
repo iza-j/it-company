@@ -11,14 +11,18 @@ public class Committee extends Team {
     @Override
     public void printDescription() {
         if ((this.name != null) && (this.leader != null) && (this.employees != null)) {
-            System.out.print(this.leader.getName() + " is the head of " + this.getName() + " committee. Other members include ");
+            System.out.print(new StringBuilder()
+                    .append(this.leader.getName())
+                    .append(" is the head of ")
+                    .append(this.getName())
+                    .append(" committee. Other members include "));
             for (int i = 0; i < this.employees.length; i++) {
                 if (i != 0) {
                     System.out.print(", ");
                 }
                 System.out.print(employees[i].getName());
             }
+            System.out.print(".\n");
         }
-        System.out.print(".\n");
     }
 }

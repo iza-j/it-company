@@ -52,48 +52,83 @@ public final class Employee implements PayableEntity, TaskOwner, Stakeholder, Sp
 
     @Override
     public String toString() {
-        return  "Employee #" + id + ": " +
-                (this.name == null ? "n/d" : this.name) +
-                ". Working since " +
-                (this.firstDay == null ? "n/d" : this.firstDay);
+        return  new StringBuilder()
+                .append("Employee #")
+                .append(id)
+                .append(": ")
+                .append(this.name == null ? "n/d" : this.name)
+                .append(". Working since ")
+                .append(this.firstDay == null ? "n/d" : this.firstDay)
+                .toString();
     }
 
     public void printTimeZone() {
         DateTimeFormatter form = DateTimeFormatter.ofPattern("HH:mm, MMMM d");
 
-        System.out.print(this.name + "'s time zone is " + ZoneId.of(this.timeZone));
-        System.out.print(". It's " + LocalDateTime.now(ZoneId.of(this.timeZone)).format(form) + " in there.\n");
+        System.out.print(new StringBuilder()
+                .append(this.name)
+                .append("'s time zone is ")
+                .append(ZoneId.of(this.timeZone))
+                .append(". It's ")
+                .append(LocalDateTime.now(ZoneId.of(this.timeZone)).format(form))
+                .append(" in there.\n"));
     }
 
     public void printWorkYears() {
         LocalDate start = LocalDate.parse(this.firstDay);
         Period period = Period.between(start, LocalDate.now());
+        long months = period.toTotalMonths();
 
-        System.out.print(this.name + " has been working with us since " + start + ". That's ");
-        if (period.toTotalMonths()>12) {
-            System.out.print(period.getYears() + " year(s) and ");
-        } if (period.toTotalMonths()>0) {
-            System.out.print(period.getMonths() + " month(s)!\n");
-        } else {
-            System.out.print(period.getDays() + " day(s)!\n");
-        }
+        System.out.print(new StringBuilder()
+                .append(this.name)
+                .append(" has been working with us since ")
+                .append(start)
+                .append(". That's ")
+
+                .append(months > 12     ? period.getYears()     : "")
+                .append(months > 12     ? " year(s) and "       : "")
+
+                .append(months > 0      ? period.getMonths()    : "")
+                .append(months > 0      ? " month(s)!\n"        : "")
+
+                .append(months == 0     ? period.getDays()      : "")
+                .append(months == 0     ? " day(s)!\n"          : ""));
     }
 
     @Override
     public void pay(double amount){
-        System.out.println(ansiColor(yellowFG, blackBG) + " *ka-ching!* " + ansiColor(reset) + " You pay " + this.name + " " + amount + " pln for their work.");
-    };
+        System.out.println(new StringBuilder()
+                .append(ansiColor(yellowFG, blackBG))
+                .append(" *ka-ching!* ")
+                .append(ansiColor(reset))
+                .append(" You pay ")
+                .append(this.name)
+                .append(" ")
+                .append(amount)
+                .append(" pln for their work."));
+    }
 
     @Override
     public void finishTask(Task task){
         task.setStatus("finished");
 
-        System.out.println(ansiColor(cyanFG) + "Task:\n" + ansiColor(reset) + task.getDescription());
-        System.out.println(ansiColor(cyanFG) + "Stakeholders:" + ansiColor(reset));
+        System.out.println(new StringBuilder()
+                .append(ansiColor(cyanFG))
+                .append("Task:\n")
+                .append(ansiColor(reset))
+                .append(task.getDescription())
+                .append("\n")
+                .append(ansiColor(cyanFG))
+                .append("Stakeholders:")
+                .append(ansiColor(reset)));
         for (Stakeholder stakeholder : task.getStakeholders()) {
             System.out.println(stakeholder.getName());
         }
-        System.out.println(ansiColor(cyanFG) + "Finished by:\n" + ansiColor(reset) + this.getName());
+        System.out.println(new StringBuilder()
+                .append(ansiColor(cyanFG))
+                .append("Finished by:\n")
+                .append(ansiColor(reset))
+                .append(this.getName()));
     }
 
     public boolean checkAffiliation (CorporateUnit corporateUnit) {

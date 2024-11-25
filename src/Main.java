@@ -26,28 +26,25 @@ public class Main {
         System.out.println();
         employee1.printTimeZone();
         System.out.println();
-        testAutomation.printEmployees();
+        testAutomation.printEmployeesDescription();
         employee2.printWorkYears();
         System.out.println();
 
         //create departments
-        Team[] teams = {testAutomation, qualityAssurance};
-        Department qaAndTesting = new Department("Quality Assurance and Testing", employee2, teams);
+        Department qaAndTesting = new Department("Quality Assurance and Testing", employee2, new Team[] {testAutomation, qualityAssurance});
         Department productAndDesign = new Department();
 
         // create a company
-        Department[] departments = {qaAndTesting, productAndDesign};
         ITCompany resolvd = new ITCompany();
         resolvd.setName("Resolvd");
         resolvd.setCeo(employee1);
-        resolvd.setDepartments(departments);
+        resolvd.setDepartments(new Department[] {qaAndTesting, productAndDesign});
 
         // create a client
         Client google = new Client("Google", "Generała Józefa Bema 2, 50-265 Wrocław, Poland");
 
         // create a project
-        BigDecimal rate = new BigDecimal(2137.9);
-        Project boopLoop = new Project(google, 42, 0, rate);
+        Project boopLoop = new Project(google, 42, 0, new BigDecimal(2137.9));
 
         // create time trackers
         TimeTracker izaBoopLoop = new TimeTracker(employee4, boopLoop, 0);
@@ -65,15 +62,14 @@ public class Main {
         System.out.println(boopLoop.getEarnings() + "\n");
 
         // create a tool
-        Tool intellij = new Tool("IntelliJ IDEA Ultimate (Enterprise Edition)", new Employee[]{employee3, employee1});
+        Tool intellij = new Tool("IntelliJ IDEA Ultimate (Enterprise Edition)", new Employee[] {employee3, employee1});
 
         // check an employee's access to a tool
         System.out.println(intellij.checkAccess(employee3));
         System.out.println(intellij.checkAccess(employee1) + "\n");
 
         // create a skill
-        Employee[] javaProgrammers = {employee1, employee3, employee4, employee5};
-        Skill programmingJava = new Skill("Programming in Java", javaProgrammers);
+        Skill programmingJava = new Skill("Programming in Java", new Employee[] {employee1, employee3, employee4, employee5});
 
         // check skilled employees' access to a tool
         programmingJava.printAccess(intellij);
@@ -81,23 +77,20 @@ public class Main {
 
         // print employees' hash codes
         Employee[] employeeList = {employee1, employee2, employee3, employee4, employee5, employee6};
-        for (int i = 0; i < employeeList.length; i++) {
-            Employee e = employeeList[i];
-            System.out.println(e.hashCode());
+        for (Employee employee : employeeList) {
+            System.out.println(employee.hashCode());
         }
         System.out.println();
 
         // print toString's output for all employees
-        for (int i = 0; i < employeeList.length; i++) {
-            Employee e = employeeList[i];
-            System.out.println(e.toString());
+        for (Employee employee : employeeList) {
+            System.out.println(employee.toString());
         }
         System.out.println();
 
         // compare all employees to employee6
-        for (int i = 0; i < employeeList.length; i++) {
-            Employee e = employeeList[i];
-            System.out.println(e.equals(employee6));
+        for (Employee employee : employeeList) {
+            System.out.println(employee.equals(employee6));
         }
         System.out.println();
 
@@ -129,10 +122,10 @@ public class Main {
 
         // use a CorporateUnit's getAllEmployees() method on objects from different classes (ITCompany, Department, Team, Committee)
         CorporateUnit[] corporateUnits = new CorporateUnit[]{resolvd, qaAndTesting, testAutomation, dei};
-        for (int i = 0; i < corporateUnits.length; i++) {
-            System.out.println(corporateUnits[i].getName() + " consists of:");
-            for (int j = 0; j < corporateUnits[i].getAllEmployees().length; j++) {
-                System.out.println(corporateUnits[i].getAllEmployees()[j].getName());
+        for (CorporateUnit corporateUnit : corporateUnits) {
+            System.out.println(corporateUnit.getName() + " consists of:");
+            for (Employee employee : corporateUnit.getAllEmployees()) {
+                System.out.println(employee.getName());
             }
             System.out.println();
         }
@@ -152,7 +145,10 @@ public class Main {
 
         // check whether an employee belongs to different CorporateUnits
         for (CorporateUnit corporateUnit : new CorporateUnit[]{testAutomation, qaAndTesting, resolvd, dei}) {
-            System.out.println(corporateUnit.getName() + ": " + employee2.checkAffiliation(corporateUnit));
+            System.out.println(new StringBuilder()
+                    .append(corporateUnit.getName())
+                    .append(": ")
+                    .append(employee2.checkAffiliation(corporateUnit)));
         }
         System.out.println();
 

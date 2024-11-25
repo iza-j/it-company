@@ -1,6 +1,7 @@
 package corporatestructure;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Department implements CorporateUnit {
 
@@ -19,24 +20,20 @@ public class Department implements CorporateUnit {
 
     @Override
     public Employee[] getAllEmployees() {
-        ArrayList<Employee> employees = new ArrayList<Employee>();
+        ArrayList<Employee> departmentEmployees = new ArrayList<Employee>();
 
         if (this.getHeadOfDpt() != null) { // if a head of department exists
-            employees.add(this.getHeadOfDpt());
+            departmentEmployees.add(this.getHeadOfDpt());
         }
 
         if (this.getTeams() != null) { // if any teams exist in the department
-            for (int i = 0; i < this.getTeams().length; i++) {
-                if (this.getTeams()[i].getAllEmployees() != null) { // if any employees exist in each team
-                    for (int j = 0; j < this.getTeams()[i].getAllEmployees().length; j++) {
-                        employees.add(this.getTeams()[i].getAllEmployees()[j]);
-                    }
-                }
+            for (Team team : this.getTeams()) {
+                Collections.addAll(departmentEmployees, team.getAllEmployees());
             }
         }
 
-        Employee[] result = new Employee[employees.size()]; // convert back to an array type
-        employees.toArray(result);
+        Employee[] result = new Employee[departmentEmployees.size()]; // convert back to an array type
+        departmentEmployees.toArray(result);
         return result;
     }
 

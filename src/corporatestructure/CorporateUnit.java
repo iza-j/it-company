@@ -5,5 +5,4 @@ public interface CorporateUnit {
     Employee[] getAllEmployees();
 
     String getName();
-
 }

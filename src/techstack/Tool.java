@@ -14,8 +14,8 @@ public class Tool {
 
     public boolean checkAccess(Employee employee) {
         boolean access = false;
-        for (int i = 0; i < this.employees.length; i++) {
-            if (employee == this.employees[i]) {
+        for (Employee employeeWithAccess : this.employees) {
+            if (employee.equals(employeeWithAccess)) {
                 access = true;
                 break;
             }
