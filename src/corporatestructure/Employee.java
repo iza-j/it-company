@@ -1,5 +1,6 @@
 package corporatestructure;
 
+import exceptions.*;
 import outsideentities.PayableEntity;
 import projectresources.*;
 import static helpers.Formatter.*;
@@ -96,16 +97,30 @@ public final class Employee implements PayableEntity, TaskOwner, Stakeholder, Sp
     }
 
     @Override
-    public void pay(double amount){
-        System.out.println(new StringBuilder()
-                .append(ansiColor(yellowFG, blackBG))
-                .append(" *ka-ching!* ")
-                .append(ansiColor(reset))
-                .append(" You pay ")
-                .append(this.name)
-                .append(" ")
+    public void pay(double amount) throws NumberEqualToZeroException, NegativeNumberException {
+        String exceptionMessage = new StringBuilder()
+                .append("You can't pay anybody ")
                 .append(amount)
-                .append(" pln for their work."));
+                .append(" pln.")
+                .toString();
+
+        if (amount == 0) {
+            throw new NumberEqualToZeroException(exceptionMessage);
+
+        } else if (amount < 0) {
+            throw new NegativeNumberException(exceptionMessage);
+
+        } else {
+            System.out.println(new StringBuilder()
+                    .append(ansiColor(yellowFG, blackBG))
+                    .append(" *ka-ching!* ")
+                    .append(ansiColor(reset))
+                    .append(" You pay ")
+                    .append(this.name)
+                    .append(" ")
+                    .append(amount)
+                    .append(" pln for their work."));
+        }
     }
 
     @Override

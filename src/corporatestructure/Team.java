@@ -1,12 +1,11 @@
 package corporatestructure;
 
+import exceptions.*;
 import projectresources.*;
 import static helpers.Formatter.*;
 import static helpers.GlobalVariable.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Objects;
+import java.util.*;
 
 public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequester {
 
@@ -73,11 +72,15 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
         }
     }
 
-    public void printEmployeesDescription() {
-        for (Employee employee : this.getAllEmployees()) {
-            employee.printTimeZone();
-            employee.printWorkYears();
-            System.out.println();
+    public void printEmployeesDescription() throws EmptyListException {
+        if (this.getAllEmployees().length == 0) {
+            throw new EmptyListException("You can't print employees' description. There are 0 people in this team.");
+        } else {
+            for (Employee employee : this.getAllEmployees()) {
+                employee.printTimeZone();
+                employee.printWorkYears();
+                System.out.println();
+            }
         }
     }
 
@@ -128,6 +131,49 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
                 .append(this.getAllEmployees().length)
                 .append(" desk(s) for ")
                 .append(this.getName()));
+    }
+
+    public void addEmployee(Employee employee) throws ObjectAlreadyIncludedException {
+        if (employee.checkAffiliation(this)) {
+            throw new ObjectAlreadyIncludedException(employee.getName() + " is already on the team, so you can't add them.");
+
+        } else {
+            ArrayList<Employee> newList = new ArrayList<Employee>(); // add everyone to a new ArrayList
+            Collections.addAll(newList, this.getEmployees());
+            Collections.addAll(newList, employee);
+
+            Employee[] result = new Employee[newList.size()]; // convert back to array and setEmployees
+            newList.toArray(result);
+            this.setEmployees(result);
+
+            System.out.println(employee.getName() + " added successfully! "); // print success message
+            this.printDescription();
+        }
+    }
+
+    public void removeEmployee(Employee removedEmployee) throws ObjectNotIncludedException {
+        if (!removedEmployee.checkAffiliation(this)) {
+            throw new ObjectNotIncludedException(removedEmployee.getName() + " is not on the team, so you can't remove them.");
+
+        } else {
+            if (removedEmployee == this.getLeader()) {
+                this.setLeader(null);
+
+            } else {
+                ArrayList<Employee> newList = new ArrayList<Employee>();
+                for (Employee oldEmployee : this.getEmployees()) {
+                    if (oldEmployee != removedEmployee) {
+                        Collections.addAll(newList, oldEmployee);
+                    }
+                }
+                Employee[] result = new Employee[newList.size()]; // convert back to array and setEmployees
+                newList.toArray(result);
+                this.setEmployees(result);
+            }
+
+            System.out.println(removedEmployee.getName() + " removed successfully! "); // print success message
+            this.printDescription();
+        }
     }
 
     @Override

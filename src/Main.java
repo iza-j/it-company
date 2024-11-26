@@ -1,21 +1,27 @@
 import corporatestructure.*;
+import exceptions.*;
 import outsideentities.*;
 import projectresources.*;
 import techstack.*;
 import static helpers.Formatter.*;
 
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 
 public class Main {
 
     public static void main(String[] args) {
+        // Homework #2
+        System.out.println("\n" + headerFormat("Homework #2"));
+
         // create employees
         Employee employee1 = new Employee(1, "Karol Zakrętka", "Antarctica/Troll", "2002-01-09", 714.0);
         Employee employee2 = new Employee(2, "Zofia Cętka", "US/Pacific", "2013-12-29", 301.7);
         Employee employee3 = new Employee(3, "Michał Dętka", "Japan", "2017-07-07", 162.0);
         Employee employee4 = new Employee(4, "Izabella Jętka", "Poland", "2024-10-28", 92.93);
         Employee employee5 = new Employee(5, "Jakub Piętka", "Portugal", "2024-04-29", 87.21);
-        Employee employee6 = new Employee(6, "Jakub Piętka", "Poland", "2024-04-29", 87.21);
+        Employee employee6 = new Employee(6, "Agata Smętka", "Iceland ", "2024-04-27", 107.03);
+        Employee employee7 = new Employee(7, "Maciej Kocimiętka", "Asia/Seoul", "2022-11-07", 111.76);
 
         // create teams
         Employee[] employees = {employee4, employee5};
@@ -23,10 +29,13 @@ public class Main {
         Team qualityAssurance = new Team();
 
         // print some of employees' data
-        System.out.println();
         employee1.printTimeZone();
         System.out.println();
-        testAutomation.printEmployeesDescription();
+        try {
+            testAutomation.printEmployeesDescription();
+        } catch (EmptyListException e) {
+            System.out.println(e);
+        }
         employee2.printWorkYears();
         System.out.println();
 
@@ -75,6 +84,9 @@ public class Main {
         programmingJava.printAccess(intellij);
         System.out.println();
 
+        // Homework #3
+        System.out.println("\n" + headerFormat("Homework #3"));
+
         // print employees' hash codes
         Employee[] employeeList = {employee1, employee2, employee3, employee4, employee5, employee6};
         for (Employee employee : employeeList) {
@@ -110,15 +122,28 @@ public class Main {
         testAutomation.printDescription();
         System.out.println();
 
+        // check whether an employee belongs to different CorporateUnits
+        for (CorporateUnit corporateUnit : new CorporateUnit[]{testAutomation, qaAndTesting, resolvd, dei}) {
+            System.out.println(new StringBuilder()
+                    .append(corporateUnit.getName())
+                    .append(": ")
+                    .append(employee2.checkAffiliation(corporateUnit)));
+        }
+        System.out.println();
+
+        // Homework #4
+        System.out.println(headerFormat("Homework #4"));
+
         // use overridden TimeTracker's methods
-        System.out.println(izaBoopLoop.toString());
+        System.out.println(izaBoopLoop);
         System.out.println(izaBoopLoop.equals(jakubBoopLoop));
         System.out.println(izaBoopLoop.hashCode() + ", " + jakubBoopLoop.hashCode() + "\n");
 
         // use overridden Team's methods
-        System.out.println(testAutomation.toString());
+        System.out.println(testAutomation);
         System.out.println(testAutomation.equals(dei));
-        System.out.println(testAutomation.hashCode() + ", " + dei.hashCode() + "\n");
+        System.out.println(testAutomation.hashCode() + ", " + dei.hashCode());
+        System.out.println();
 
         // use a CorporateUnit's getAllEmployees() method on objects from different classes (ITCompany, Department, Team, Committee)
         CorporateUnit[] corporateUnits = new CorporateUnit[]{resolvd, qaAndTesting, testAutomation, dei};
@@ -131,9 +156,16 @@ public class Main {
         }
 
         // use PayableEntity's pay() method
-        inea.pay(420);
-        jetBrains.pay(69999.99);
-        employee4.pay(employee4.getHourlyWage() * 8);
+        try {
+            jetBrains.pay(420);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        try {
+            employee4.pay(employee4.getHourlyWage() * 8);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         System.out.println();
 
         // create a task and close it
@@ -143,19 +175,99 @@ public class Main {
         System.out.println("\n" + task1.getStatus());
         System.out.println();
 
-        // check whether an employee belongs to different CorporateUnits
-        for (CorporateUnit corporateUnit : new CorporateUnit[]{testAutomation, qaAndTesting, resolvd, dei}) {
-            System.out.println(new StringBuilder()
-                    .append(corporateUnit.getName())
-                    .append(": ")
-                    .append(employee2.checkAffiliation(corporateUnit)));
-        }
-        System.out.println();
-
         // use SpaceRequester's method
         employee1.requestSpace();
         christmasParty.requestSpace();
+        System.out.println();
 
         // i can't come up with where i might want to use a static block (fragment of code that gets executed exactly once). i'd appreciate any suggestions
+
+        // Homework #5
+        System.out.println(headerFormat("Homework #5"));
+
+        // throw NumberEqualToZeroException
+        try {
+            employee4.pay(0);
+        } catch (NumberEqualToZeroException | NegativeNumberException e) {
+            System.out.println(e);
+        }
+
+        // throw NegativeNumberException
+        try {
+            jetBrains.pay(-2137);
+        } catch (NumberEqualToZeroException | NegativeNumberException e) {
+            System.out.println(e);
+        }
+
+        // use FileOutputStream (a built-in class that implements AutoCloseable interface)
+        try (FileOutputStream fos = new FileOutputStream(testAutomation.getName() + ".txt")) {
+            String text = testAutomation.getName() + " team employees:\n";
+            for (Employee employee : testAutomation.getAllEmployees()) {
+                String employeeDescription = new StringBuilder()
+                        .append("\n    Employee ID: ")
+                        .append(employee.getID())
+                        .append("\n    Name: ")
+                        .append(employee.getName())
+                        .append("\n    Working since: ")
+                        .append(employee.getFirstDay())
+                        .append("\n    Time zone: ")
+                        .append(employee.getTimeZone())
+                        .append("\n")
+                        .toString();
+                text = text.concat(employeeDescription);
+            }
+            fos.write(text.getBytes());
+            System.out.println("Exported to '" + testAutomation.getName() + ".txt' successfully!\n");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        // create class that implements the AutoCloseable interface and close it using the try with resources
+        try (MysteriousObject mysteriousObject = new MysteriousObject()) {
+            System.out.println("You've opened a mysterious object! It's " + mysteriousObject);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        // throw ObjectAlreadyIncludedException
+        testAutomation.printDescription();
+        System.out.println();
+
+        try {
+            testAutomation.addEmployee(employee3);
+        } catch (ObjectAlreadyIncludedException e) {
+            System.out.print(e);
+        } finally {
+            System.out.println();
+        }
+
+        try {
+            testAutomation.addEmployee(employee6);
+        } catch (ObjectAlreadyIncludedException e) {
+            System.out.print(e);
+        } finally {
+            System.out.println();
+        }
+
+        // throw ObjectNotIncludedException
+        try {
+            testAutomation.removeEmployee(employee7);
+        } catch (ObjectNotIncludedException e) {
+            System.out.print(e);
+        } finally {
+            System.out.println();
+        }
+
+        try {
+            testAutomation.removeEmployee(employee6);
+        } catch (ObjectNotIncludedException e) {
+            System.out.print(e);
+        } finally {
+            System.out.println();
+        }
+
+        // throw EmptyListException (unchecked)
+        qualityAssurance.printEmployeesDescription();
+        System.out.println("This won't get printed");
     }
 }

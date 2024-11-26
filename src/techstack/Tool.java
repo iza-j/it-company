@@ -7,6 +7,9 @@ public class Tool {
     private String name;
     private Employee[] employees;
 
+    public Tool() {
+    }
+
     public Tool(String name, Employee[] employees) {
         this.name = name;
         this.employees = employees;
