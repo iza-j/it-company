@@ -7,12 +7,13 @@ import static helpers.Formatter.*;
 
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
         // Homework #2
-        System.out.println("\n" + headerFormat("Homework #2"));
+        System.out.println("\n" + formatHeader("Homework #2"));
 
         // create employees
         Employee employee1 = new Employee(1, "Karol Zakrętka", "Antarctica/Troll", "2002-01-09", 714.0);
@@ -20,7 +21,7 @@ public class Main {
         Employee employee3 = new Employee(3, "Michał Dętka", "Japan", "2017-07-07", 162.0);
         Employee employee4 = new Employee(4, "Izabella Jętka", "Poland", "2024-10-28", 92.93);
         Employee employee5 = new Employee(5, "Jakub Piętka", "Portugal", "2024-04-29", 87.21);
-        Employee employee6 = new Employee(6, "Agata Smętka", "Iceland ", "2024-04-27", 107.03);
+        Employee employee6 = new Employee(6, "Agata Smętka", "Poland", "2024-04-27", 107.03);
         Employee employee7 = new Employee(7, "Maciej Kocimiętka", "Asia/Seoul", "2022-11-07", 111.76);
 
         // create teams
@@ -85,7 +86,7 @@ public class Main {
         System.out.println();
 
         // Homework #3
-        System.out.println("\n" + headerFormat("Homework #3"));
+        System.out.println("\n" + formatHeader("Homework #3"));
 
         // print employees' hash codes
         Employee[] employeeList = {employee1, employee2, employee3, employee4, employee5, employee6};
@@ -129,10 +130,9 @@ public class Main {
                     .append(": ")
                     .append(employee2.checkAffiliation(corporateUnit)));
         }
-        System.out.println();
 
         // Homework #4
-        System.out.println(headerFormat("Homework #4"));
+        System.out.println("\n" + formatHeader("Homework #4"));
 
         // use overridden TimeTracker's methods
         System.out.println(izaBoopLoop);
@@ -178,12 +178,11 @@ public class Main {
         // use SpaceRequester's method
         employee1.requestSpace();
         christmasParty.requestSpace();
-        System.out.println();
 
         // i can't come up with where i might want to use a static block (fragment of code that gets executed exactly once). i'd appreciate any suggestions
 
         // Homework #5
-        System.out.println(headerFormat("Homework #5"));
+        System.out.println("\n" + formatHeader("Homework #5"));
 
         // throw NumberEqualToZeroException
         try {
@@ -266,8 +265,53 @@ public class Main {
             System.out.println();
         }
 
-        // throw EmptyListException (unchecked)
-        qualityAssurance.printEmployeesDescription();
-        System.out.println("This won't get printed");
+//        // EmptyListException (unchecked)
+//        qualityAssurance.printEmployeesDescription();
+//        System.out.println("This won't get printed");
+
+        // Homework #6
+        System.out.println(formatHeader("Homework #6"));
+
+        // use Map and Set interfaces
+        Employee[] allEmployees = new Employee[]{employee1, employee2, employee3, employee4, employee5, employee6, employee7};
+        SortedMap<String, Set<String>> timeMap = new TreeMap<>(); // SortedMap is an interface (cannot be instantiated), but TreeMap is a class
+
+        for (Employee employee : allEmployees) { // get timeMap keys
+            timeMap.put(employee.getTime(), new TreeSet<>());
+        }
+
+        for (Employee employee : allEmployees) {
+            String time = employee.getTime();
+            String name = employee.getName();
+
+            Set<String> allNames = timeMap.get(time); // add employees' names to timeMap values
+            allNames.add(name);
+            timeMap.put(time, allNames);
+        }
+
+        for (String key : timeMap.keySet()) { // print out timeMap
+            System.out.println(key + " --- " + timeMap.get(key));
+        }
+        System.out.println();
+
+        // create custom LinkedList class with generic
+        GenericQueue<String> boopLoopTickets = new GenericQueue<>();
+        boopLoopTickets.add("Kamil Ślimak has been tinkering with the matrix and opened the 7th dimension. Please fix it by eod. I already revoked his admin rights.");
+        boopLoopTickets.add("google started asking about the hole in the sky. when's the patch coming?");
+        boopLoopTickets.add("you-know-what got fried AGAIN");
+
+        System.out.println(boopLoopTickets.peek());
+        boopLoopTickets.resolve();
+        System.out.println();
+
+        GenericQueue<Integer> coldCallingList = new GenericQueue<>();
+        Integer[] numbers = new Integer[] {666777888, 666111222, 666555444, 666333999};
+        Collections.addAll(coldCallingList, numbers);
+
+        System.out.println(coldCallingList.peek());
+        coldCallingList.resolve();
+        System.out.println();
+
+        // i've used Lists previously in ITCompany, Department and Team
     }
 }

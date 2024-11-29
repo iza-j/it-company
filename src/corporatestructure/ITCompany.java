@@ -11,7 +11,7 @@ public class ITCompany implements CorporateUnit {
 
     @Override
     public Employee[] getAllEmployees() {
-        ArrayList<Employee> companyEmployees = new ArrayList<Employee>();
+        ArrayList<Employee> companyEmployees = new ArrayList<>();
 
         if (this.getCeo() != null) { // if a ceo exists
             companyEmployees.add(this.getCeo());

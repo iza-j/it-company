@@ -20,7 +20,7 @@ public class Department implements CorporateUnit {
 
     @Override
     public Employee[] getAllEmployees() {
-        ArrayList<Employee> departmentEmployees = new ArrayList<Employee>();
+        ArrayList<Employee> departmentEmployees = new ArrayList<>();
 
         if (this.getHeadOfDpt() != null) { // if a head of department exists
             departmentEmployees.add(this.getHeadOfDpt());

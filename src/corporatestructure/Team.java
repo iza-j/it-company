@@ -72,7 +72,7 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
         }
     }
 
-    public void printEmployeesDescription() throws EmptyListException {
+    public void printEmployeesDescription() {
         if (this.getAllEmployees().length == 0) {
             throw new EmptyListException("You can't print employees' description. There are 0 people in this team.");
         } else {
@@ -86,7 +86,7 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
 
     @Override
     public final Employee[] getAllEmployees() { // final method can't be overridden by a subclass
-        ArrayList<Employee> teamEmployees = new ArrayList<Employee>();
+        ArrayList<Employee> teamEmployees = new ArrayList<>();
 
         if (this.getLeader() != null) { // if a team leader exists
             teamEmployees.add(this.getLeader());
@@ -138,7 +138,7 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
             throw new ObjectAlreadyIncludedException(employee.getName() + " is already on the team, so you can't add them.");
 
         } else {
-            ArrayList<Employee> newList = new ArrayList<Employee>(); // add everyone to a new ArrayList
+            ArrayList<Employee> newList = new ArrayList<>(); // add everyone to a new ArrayList
             Collections.addAll(newList, this.getEmployees());
             Collections.addAll(newList, employee);
 
@@ -160,7 +160,7 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
                 this.setLeader(null);
 
             } else {
-                ArrayList<Employee> newList = new ArrayList<Employee>();
+                ArrayList<Employee> newList = new ArrayList<>();
                 for (Employee oldEmployee : this.getEmployees()) {
                     if (oldEmployee != removedEmployee) {
                         Collections.addAll(newList, oldEmployee);

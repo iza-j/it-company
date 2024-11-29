@@ -162,6 +162,11 @@ public final class Employee implements PayableEntity, TaskOwner, Stakeholder, Sp
         System.out.println("Your request has been approved! You booked 1 desk for " + this.getName());
     };
 
+    public String getTime() {
+        DateTimeFormatter form = DateTimeFormatter.ofPattern("YYYY.MM.dd, HH:mm");
+        return LocalDateTime.now(ZoneId.of(this.timeZone)).format(form);
+    }
+
     public int getID() {
         return id;
     }

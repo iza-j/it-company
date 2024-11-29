@@ -1,6 +1,6 @@
 package helpers;
 
-public class Formatter {
+public abstract class Formatter {
 
     public static final String reset =      "0";
     public static final String bold =       "1";
@@ -40,7 +40,7 @@ public class Formatter {
                 .toString();
     }
 
-    public static String headerFormat(String text) {
+    public static String formatHeader(String text) {
         return new StringBuilder()
                 .append(ansiColor(blackFG, purpleBG, bold))
                 .append(" --- ")
