@@ -1,17 +1,16 @@
 package corporatestructure;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashSet;
 
 public class ITCompany implements CorporateUnit {
 
     private String name;
     private Employee ceo;
-    private Department[] departments;
+    private HashSet<Department> departments;
 
     @Override
-    public Employee[] getAllEmployees() {
-        ArrayList<Employee> companyEmployees = new ArrayList<>();
+    public HashSet<Employee> getAllEmployees() {
+        HashSet<Employee> companyEmployees = new HashSet<>();
 
         if (this.getCeo() != null) { // if a ceo exists
             companyEmployees.add(this.getCeo());
@@ -19,13 +18,11 @@ public class ITCompany implements CorporateUnit {
 
         if (this.getDepartments() != null) { // if any departments exist in the company
             for (Department department : this.getDepartments()) {
-                Collections.addAll(companyEmployees, department.getAllEmployees());
+                companyEmployees.addAll(department.getAllEmployees());
             }
         }
 
-        Employee[] result = new Employee[companyEmployees.size()]; // convert back to an array type
-        companyEmployees.toArray(result);
-        return result;
+        return companyEmployees;
     }
 
     @Override
@@ -37,11 +34,11 @@ public class ITCompany implements CorporateUnit {
         this.name = name;
     }
 
-    public Department[] getDepartments() {
+    public HashSet<Department> getDepartments() {
         return departments;
     }
 
-    public void setDepartments(Department[] departments) {
+    public void setDepartments(HashSet<Department> departments) {
         this.departments = departments;
     }
 

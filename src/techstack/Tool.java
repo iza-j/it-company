@@ -2,15 +2,17 @@ package techstack;
 
 import corporatestructure.Employee;
 
+import java.util.HashSet;
+
 public class Tool {
 
     private String name;
-    private Employee[] employees;
+    private HashSet<Employee> employees;
 
     public Tool() {
     }
 
-    public Tool(String name, Employee[] employees) {
+    public Tool(String name, HashSet<Employee> employees) {
         this.name = name;
         this.employees = employees;
     }
@@ -34,11 +36,11 @@ public class Tool {
         this.name = name;
     }
 
-    public Employee[] getEmployees() {
+    public HashSet<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(Employee[] employees) {
+    public void setEmployees(HashSet<Employee> employees) {
         this.employees = employees;
     }
 }

@@ -25,8 +25,7 @@ public class Main {
         Employee employee7 = new Employee(7, "Maciej Kocimiętka", "Asia/Seoul", "2022-11-07", 111.76);
 
         // create teams
-        Employee[] employees = {employee4, employee5};
-        Team testAutomation = new Team("Test Automation", employee3, employees);
+        Team testAutomation = new Team("Test Automation", employee3, new HashSet<> (Arrays.asList(employee4, employee5)));
         Team qualityAssurance = new Team();
 
         // print some of employees' data
@@ -41,14 +40,14 @@ public class Main {
         System.out.println();
 
         //create departments
-        Department qaAndTesting = new Department("Quality Assurance and Testing", employee2, new Team[] {testAutomation, qualityAssurance});
+        Department qaAndTesting = new Department("Quality Assurance and Testing", employee2, new HashSet<> (Arrays.asList(testAutomation, qualityAssurance)));
         Department productAndDesign = new Department();
 
         // create a company
         ITCompany resolvd = new ITCompany();
         resolvd.setName("Resolvd");
         resolvd.setCeo(employee1);
-        resolvd.setDepartments(new Department[] {qaAndTesting, productAndDesign});
+        resolvd.setDepartments(new HashSet<> (Arrays.asList(qaAndTesting, productAndDesign)));
 
         // create a client
         Client google = new Client("Google", "Generała Józefa Bema 2, 50-265 Wrocław, Poland");
@@ -72,14 +71,16 @@ public class Main {
         System.out.println(boopLoop.getEarnings() + "\n");
 
         // create a tool
-        Tool intellij = new Tool("IntelliJ IDEA Ultimate (Enterprise Edition)", new Employee[] {employee3, employee1});
+        HashSet<Employee> intellijEmployees = new HashSet<> (Arrays.asList(employee3, employee1));
+        Tool intellij = new Tool("IntelliJ IDEA Ultimate (Enterprise Edition)", intellijEmployees);
 
         // check an employee's access to a tool
         System.out.println(intellij.checkAccess(employee3));
         System.out.println(intellij.checkAccess(employee1) + "\n");
 
         // create a skill
-        Skill programmingJava = new Skill("Programming in Java", new Employee[] {employee1, employee3, employee4, employee5});
+        HashSet<Employee> programmingJavaEmployees = new HashSet<> (Arrays.asList(employee1, employee3, employee4, employee5));
+        Skill programmingJava = new Skill("Programming in Java", programmingJavaEmployees);
 
         // check skilled employees' access to a tool
         programmingJava.printAccess(intellij);
@@ -89,7 +90,7 @@ public class Main {
         System.out.println("\n" + formatHeader("Homework #3"));
 
         // print employees' hash codes
-        Employee[] employeeList = {employee1, employee2, employee3, employee4, employee5, employee6};
+        ArrayList<Employee> employeeList = new ArrayList<> (Arrays.asList(employee1, employee2, employee3, employee4, employee5, employee6));
         for (Employee employee : employeeList) {
             System.out.println(employee.hashCode());
         }
@@ -111,20 +112,21 @@ public class Main {
 
         // create service providers and call them
         Provider inea = new InternetServiceProvider("Inea", "112", "Poland");
-        Provider jetBrains = new SoftwareVendor("JetBrains", "987123654", new Tool[]{intellij});
+        HashSet<Tool> jetBrainsTools = new HashSet<> (Arrays.asList(intellij));
+        Provider jetBrains = new SoftwareVendor("JetBrains", "987123654", jetBrainsTools);
         inea.phoneCall();
         jetBrains.phoneCall();
 
         // create a committe & a taskforce, then print their descriptions
-        Team dei = new Committee("Diversity, Equity and Inclusion", employee2, new Employee[]{employee3, employee4});
-        Team christmasParty = new TaskForce("Christmas Party Organizers", employee4, new Employee[]{employee2, employee5});
+        Team dei = new Committee("Diversity, Equity and Inclusion", employee2, new HashSet<> (Arrays.asList(employee3, employee4)));
+        Team christmasParty = new TaskForce("Christmas Party Organizers", employee4, new HashSet<> (Arrays.asList(employee2, employee5)));
         dei.printDescription();
         christmasParty.printDescription();
         testAutomation.printDescription();
         System.out.println();
 
         // check whether an employee belongs to different CorporateUnits
-        for (CorporateUnit corporateUnit : new CorporateUnit[]{testAutomation, qaAndTesting, resolvd, dei}) {
+        for (CorporateUnit corporateUnit : new ArrayList<> (Arrays.asList(testAutomation, qaAndTesting, resolvd, dei))) {
             System.out.println(new StringBuilder()
                     .append(corporateUnit.getName())
                     .append(": ")
@@ -146,7 +148,7 @@ public class Main {
         System.out.println();
 
         // use a CorporateUnit's getAllEmployees() method on objects from different classes (ITCompany, Department, Team, Committee)
-        CorporateUnit[] corporateUnits = new CorporateUnit[]{resolvd, qaAndTesting, testAutomation, dei};
+        ArrayList<CorporateUnit> corporateUnits = new ArrayList<> (Arrays.asList(resolvd, qaAndTesting, testAutomation, dei));
         for (CorporateUnit corporateUnit : corporateUnits) {
             System.out.println(corporateUnit.getName() + " consists of:");
             for (Employee employee : corporateUnit.getAllEmployees()) {
@@ -169,7 +171,8 @@ public class Main {
         System.out.println();
 
         // create a task and close it
-        Task task1 = new Task("Whatchamacallit is shebanging in the BoopLoop's pinto logs and the mainframe hexing gets bungled ", employee4, new Stakeholder[]{employee3, google}, "open");
+        HashSet<Stakeholder> task1Stakeholders = new HashSet<>(Arrays.asList(employee3, google));
+        Task task1 = new Task("Whatchamacallit is shebanging in the BoopLoop's pinto logs and the mainframe hexing gets bungled ", employee4, task1Stakeholders, "open");
         System.out.println(task1.getStatus() + "\n");
         employee4.finishTask(task1);
         System.out.println("\n" + task1.getStatus());
@@ -273,7 +276,7 @@ public class Main {
         System.out.println(formatHeader("Homework #6"));
 
         // use Map and Set interfaces
-        Employee[] allEmployees = new Employee[]{employee1, employee2, employee3, employee4, employee5, employee6, employee7};
+        ArrayList<Employee> allEmployees = new ArrayList<> (Arrays.asList(employee1, employee2, employee3, employee4, employee5, employee6, employee7));
         SortedMap<String, Set<String>> timeMap = new TreeMap<>(); // SortedMap is an interface (cannot be instantiated), but TreeMap is a class
 
         for (Employee employee : allEmployees) { // get timeMap keys
@@ -293,25 +296,5 @@ public class Main {
             System.out.println(key + " --- " + timeMap.get(key));
         }
         System.out.println();
-
-        // create custom LinkedList class with generic
-        GenericQueue<String> boopLoopTickets = new GenericQueue<>();
-        boopLoopTickets.add("Kamil Ślimak has been tinkering with the matrix and opened the 7th dimension. Please fix it by eod. I already revoked his admin rights.");
-        boopLoopTickets.add("google started asking about the hole in the sky. when's the patch coming?");
-        boopLoopTickets.add("you-know-what got fried AGAIN");
-
-        System.out.println(boopLoopTickets.peek());
-        boopLoopTickets.resolve();
-        System.out.println();
-
-        GenericQueue<Integer> coldCallingList = new GenericQueue<>();
-        Integer[] numbers = new Integer[] {666777888, 666111222, 666555444, 666333999};
-        Collections.addAll(coldCallingList, numbers);
-
-        System.out.println(coldCallingList.peek());
-        coldCallingList.resolve();
-        System.out.println();
-
-        // i've used Lists previously in ITCompany, Department and Team
     }
 }

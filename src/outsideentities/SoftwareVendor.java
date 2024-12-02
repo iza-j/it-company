@@ -2,11 +2,13 @@ package outsideentities;
 
 import techstack.Tool;
 
+import java.util.HashSet;
+
 public class SoftwareVendor extends Provider {
 
-    private Tool[] tools;
+    private HashSet<Tool> tools;
 
-    public SoftwareVendor(String name, String phoneNumber, Tool[] tools) {
+    public SoftwareVendor(String name, String phoneNumber, HashSet<Tool> tools) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.tools = tools;
@@ -17,11 +19,11 @@ public class SoftwareVendor extends Provider {
         System.out.println("Calling...\n.\n.\n.\n" + this.name + "'s customer service is temporarily unavailable. Please message us on BoopLoop.\n");
     }
 
-    public Tool[] getTools() {
+    public HashSet<Tool> getTools() {
         return tools;
     }
 
-    public void setTools(Tool[] tools) {
+    public void setTools(HashSet<Tool> tools) {
         this.tools = tools;
     }
 }

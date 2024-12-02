@@ -11,12 +11,12 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
 
     protected String name;
     protected Employee leader;
-    protected Employee[] employees;
+    protected HashSet<Employee> employees;
 
     public Team() {
     }
 
-    public Team(String name, Employee leader, Employee[] employees) {
+    public Team(String name, Employee leader, HashSet<Employee> employees) {
         this.name = name;
         this.leader = leader;
         this.employees = employees;
@@ -62,18 +62,20 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
                     .append(" is in charge of ")
                     .append(this.getName())
                     .append(". "));
-            for (int i = 0; i < this.employees.length; i++) {
+
+            Employee[] temp = this.getEmployees().toArray(new Employee[0]);
+            for (int i = 0; i < temp.length; i++) {
                 if (i != 0) {
                     System.out.print(", ");
                 }
-                System.out.print(employees[i].getName());
+                System.out.print(temp[i].getName());
             }
             System.out.print(" work alongside them.\n");
         }
     }
 
     public void printEmployeesDescription() {
-        if (this.getAllEmployees().length == 0) {
+        if (this.getAllEmployees().isEmpty()) {
             throw new EmptyListException("You can't print employees' description. There are 0 people in this team.");
         } else {
             for (Employee employee : this.getAllEmployees()) {
@@ -85,20 +87,18 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
     }
 
     @Override
-    public final Employee[] getAllEmployees() { // final method can't be overridden by a subclass
-        ArrayList<Employee> teamEmployees = new ArrayList<>();
+    public final HashSet<Employee> getAllEmployees() { // final method can't be overridden by a subclass
+        HashSet<Employee> teamEmployees = new HashSet<>();
 
         if (this.getLeader() != null) { // if a team leader exists
             teamEmployees.add(this.getLeader());
         }
 
         if (this.getEmployees() != null) { // if any employees exist
-            Collections.addAll(teamEmployees, this.getEmployees());
+            teamEmployees.addAll(this.getEmployees());
         }
 
-        Employee[] result = new Employee[teamEmployees.size()]; // convert back to an array type
-        teamEmployees.toArray(result);
-        return result;
+        return teamEmployees;
     }
 
     @Override
@@ -128,7 +128,7 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
     public void requestSpace() {
         System.out.println(new StringBuilder()
                 .append("Your request has been approved! You booked ")
-                .append(this.getAllEmployees().length)
+                .append(this.getAllEmployees().size())
                 .append(" desk(s) for ")
                 .append(this.getName()));
     }
@@ -138,13 +138,9 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
             throw new ObjectAlreadyIncludedException(employee.getName() + " is already on the team, so you can't add them.");
 
         } else {
-            ArrayList<Employee> newList = new ArrayList<>(); // add everyone to a new ArrayList
-            Collections.addAll(newList, this.getEmployees());
-            Collections.addAll(newList, employee);
-
-            Employee[] result = new Employee[newList.size()]; // convert back to array and setEmployees
-            newList.toArray(result);
-            this.setEmployees(result);
+            HashSet<Employee> newList = new HashSet<>(this.getEmployees());
+            newList.add(employee);
+            this.setEmployees(newList);
 
             System.out.println(employee.getName() + " added successfully! "); // print success message
             this.printDescription();
@@ -160,15 +156,13 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
                 this.setLeader(null);
 
             } else {
-                ArrayList<Employee> newList = new ArrayList<>();
+                HashSet<Employee> newList = new HashSet<>();
                 for (Employee oldEmployee : this.getEmployees()) {
                     if (oldEmployee != removedEmployee) {
-                        Collections.addAll(newList, oldEmployee);
+                        newList.add(oldEmployee);
                     }
                 }
-                Employee[] result = new Employee[newList.size()]; // convert back to array and setEmployees
-                newList.toArray(result);
-                this.setEmployees(result);
+                this.setEmployees(newList);
             }
 
             System.out.println(removedEmployee.getName() + " removed successfully! "); // print success message
@@ -193,11 +187,11 @@ public class Team implements CorporateUnit, TaskOwner, Stakeholder, SpaceRequest
         this.leader = leader;
     }
 
-    public Employee[] getEmployees() {
+    public HashSet<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(Employee[] employees) {
+    public void setEmployees(HashSet<Employee> employees) {
         this.employees = employees;
     }
 }

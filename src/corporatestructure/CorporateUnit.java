@@ -1,8 +1,10 @@
 package corporatestructure;
 
+import java.util.HashSet;
+
 public interface CorporateUnit {
 
-    Employee[] getAllEmployees();
+    HashSet<Employee> getAllEmployees();
 
     String getName();
 }

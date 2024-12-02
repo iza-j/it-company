@@ -1,26 +1,25 @@
 package corporatestructure;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class Department implements CorporateUnit {
 
     private String name;
     private Employee headOfDpt;
-    private Team[] teams;
+    private HashSet<Team> teams;
 
     public Department() {
     }
 
-    public Department(String name, Employee headOfDpt, Team[] teams) {
+    public Department(String name, Employee headOfDpt, HashSet<Team> teams) {
         this.name = name;
         this.headOfDpt = headOfDpt;
         this.teams = teams;
     }
 
     @Override
-    public Employee[] getAllEmployees() {
-        ArrayList<Employee> departmentEmployees = new ArrayList<>();
+    public HashSet<Employee> getAllEmployees() {
+        HashSet<Employee> departmentEmployees = new HashSet<>();
 
         if (this.getHeadOfDpt() != null) { // if a head of department exists
             departmentEmployees.add(this.getHeadOfDpt());
@@ -28,20 +27,18 @@ public class Department implements CorporateUnit {
 
         if (this.getTeams() != null) { // if any teams exist in the department
             for (Team team : this.getTeams()) {
-                Collections.addAll(departmentEmployees, team.getAllEmployees());
+                departmentEmployees.addAll(team.getAllEmployees());
             }
         }
 
-        Employee[] result = new Employee[departmentEmployees.size()]; // convert back to an array type
-        departmentEmployees.toArray(result);
-        return result;
+        return departmentEmployees;
     }
 
-    public Team[] getTeams() {
+    public HashSet<Team> getTeams() {
         return teams;
     }
 
-    public void setTeams(Team[] teams) {
+    public void setTeams(HashSet<Team> teams) {
         this.teams = teams;
     }
 

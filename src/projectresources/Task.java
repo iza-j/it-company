@@ -1,13 +1,15 @@
 package projectresources;
 
+import java.util.HashSet;
+
 public class Task {
 
     private String description;
     private TaskOwner owner;
-    private Stakeholder[] stakeholders;
+    private HashSet<Stakeholder> stakeholders;
     private String status;
 
-    public Task(String description, TaskOwner owner, Stakeholder[] stakeholders, String status) {
+    public Task(String description, TaskOwner owner, HashSet<Stakeholder> stakeholders, String status) {
         this.description = description;
         this.owner = owner;
         this.stakeholders = stakeholders;
@@ -30,11 +32,11 @@ public class Task {
         this.owner = owner;
     }
 
-    public Stakeholder[] getStakeholders() {
+    public HashSet<Stakeholder> getStakeholders() {
         return stakeholders;
     }
 
-    public void setStakeholders(Stakeholder[] stakeholders) {
+    public void setStakeholders(HashSet<Stakeholder> stakeholders) {
         this.stakeholders = stakeholders;
     }
 
